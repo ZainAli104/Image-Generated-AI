@@ -19,7 +19,7 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        const response = await fetch('https://image-generated-ai.vercel.app/api/v1/dalle', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -41,33 +41,34 @@ const CreatePost = () => {
     }
   };
 
+  
   const handleSubmit = async (e) => {
-    e.preventDefault
+    e.preventDefault();
 
     if (form.prompt && form.photo) {
       setLoading(true);
-
       try {
-        const response = await fetch('http://localhost:8080/api/v1/post', {
+        const response = await fetch('https://image-generated-ai.vercel.app/api/v1/post', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(form)
-        })
+          body: JSON.stringify({ ...form }),
+        });
 
         await response.json();
+        console.log('Upload successfully')
         navigate('/');
-      } catch (error) {
-        alert(error)
+      } catch (err) {
+        alert(err);
       } finally {
         setLoading(false);
       }
     } else {
-      alert('Please enter a prompt and generate an image');
+      alert('Please generate an image with proper details');
     }
-  }
-  
+  };
+
   const handleChange = (e)=> {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
@@ -87,6 +88,9 @@ const CreatePost = () => {
         <p className="mt-2 text-[#666e75] text-[16px] max-w[500px]">
           Create imaginative and visually stunning
           images through DALL-E AI and share them with the community
+        </p>
+        <p className="mt-2 text-[#666e75] text-[16px] max-w[500px]">
+          Copyright © 2023 <span className="font-bold">ALPHA</span>. All rights reserved.
         </p>
       </div>
 
