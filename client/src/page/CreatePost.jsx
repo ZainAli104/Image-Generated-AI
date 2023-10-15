@@ -7,13 +7,13 @@ import { FormField, Loader } from '../components'
 
 const CreatePost = () => {
   const navigate = useNavigate();
+  const [generatingImg, setGeneratingImg] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: '',
     prompt: '',
     photo: ''
-  })
-  const [generatingImg, setGeneratingImg] = useState(false);
-  const [loading, setLoading] = useState(false);
+  });
 
   const generateImage = async () => {
     if (form.prompt) {
@@ -37,7 +37,7 @@ const CreatePost = () => {
         setGeneratingImg(false);
       }
     } else {
-      alert('Please provide proper prompt');
+      alert('Please provide valid prompt');
     }
   };
 
